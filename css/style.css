@@ -3,8 +3,11 @@
 .hero h2,
 .hero h3,
 h1, h2, h3 {
-  font-family: 'MedievalSharp', cursive;
-  /* optional noch ein leichter Textschatten für mehr Tiefe */
+  font-family: 'Metamorphous', cursive;
+  font-size: 4rem;        /* nach deinem Geschmack anpassen */
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  letter-spacing: 3px;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
 
