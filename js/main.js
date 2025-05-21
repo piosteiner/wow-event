@@ -55,6 +55,10 @@ function renderParticipants(list) {
   tbody.innerHTML = '';
 
   list.forEach(p => {
+    // extract Twitch username from URL
+    const username = p.twitch_link
+      ? p.twitch_link.replace(/.*twitch\.tv\//, '').replace(/\/.*$/, '')
+      : null;
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${p.streamer}</td>
@@ -89,7 +93,7 @@ function renderParticipants(list) {
       </td>
     `;
     tbody.appendChild(tr);
-    
+
     // now fetch live status and swap dot class
     if (username) {
       fetch(`https://decapi.me/twitch/uptime/${username}`)
