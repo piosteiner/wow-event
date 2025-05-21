@@ -110,16 +110,16 @@ nav a {
   font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   border-radius: 0.25rem;
-  color: #cacaca;
-  background: #222;
+  color: #ECEFCA;
+  background: #132130;
   transition: background 0.2s;
 }
 .tab-button:hover {
   background: rgba(255,255,255,0.3);
 }
 .tab-button.active {
-  background: #fff;
-  color: #111;
+  background: #ECEFCA;
+  color: #213448;
 }
 
 /* Tab Content */
