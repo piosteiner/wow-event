@@ -1,0 +1,31 @@
+/* Reset & base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; line-height: 1.6; color: #222; }
+.container { max-width: 1000px; margin: 0 auto; padding: 1rem; }
+
+/* Header & nav */
+header { background: #111; color: #fff; }
+header .container { display: flex; align-items: center; justify-content: space-between; }
+.logo { height: 50px; }
+nav ul { list-style: none; display: flex; gap: 1rem; }
+nav a { color: #fff; text-decoration: none; }
+.nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { padding: 0.5rem; border: 1px solid #ddd; text-align: center; }
+thead { background: #f4f4f4; }
+
+/* Sections */
+section { margin: 2rem 0; }
+.day ul { list-style: none; }
+.video-list li { margin: 0.5rem 0; }
+
+/* Footer */
+footer { background: #f4f4f4; text-align: center; padding: 1rem; margin-top: 2rem; }
+
+/* Responsive nav */
+@media (max-width: 768px) {
+  nav { display: none; }
+  .nav-toggle { display: block; }
+}
