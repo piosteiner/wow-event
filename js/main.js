@@ -58,6 +58,9 @@ function renderParticipants(list) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${p.streamer}</td>
+      <td id="live-status-${username}">
+        <span class="status-dot offline"></span>
+      </td>
       <td>
         ${p.twitch_link
           ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">Twitch</a>`
@@ -86,6 +89,27 @@ function renderParticipants(list) {
       </td>
     `;
     tbody.appendChild(tr);
+    
+    // now fetch live status and swap dot class
+    if (username) {
+      fetch(`https://decapi.me/twitch/uptime/${username}`)
+        .then(r => r.text())
+        .then(text => {
+          const cell = document.getElementById(`live-status-${username}`);
+          if (!cell) return;
+          const dot = cell.querySelector('.status-dot');
+          if (text.includes('has not been live')) {
+            dot.classList.remove('online');
+            dot.classList.add('offline');
+          } else {
+            dot.classList.remove('offline');
+            dot.classList.add('online');
+          }
+        })
+        .catch(() => {
+          // on error leave red dot
+        });
+    }
   });
 }
 

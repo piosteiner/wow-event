@@ -174,3 +174,19 @@ footer {
   .hero h2 { font-size: 1.75rem; }
   .hero h3 { font-size: 1.25rem; }
 }
+
+/* status‐dot */
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.status-dot.online {
+  background-color: #4CAF50; /* green */
+}
+.status-dot.offline {
+  background-color: #F44336; /* red */
+}
