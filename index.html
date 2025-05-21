@@ -56,57 +56,27 @@
 
 <main class="container">
 <!-- Teilnehmer:innen -->
-<section id="participants">
-    <h1>Teilnehmer:innen</h1>
-    <table>
+<section id="participants" class="tab-content active">
+  <h1>Teilnehmer:innen</h1>
+  <table>
     <thead>
-        <tr>
-        <th>Metashi12</th>
-        <th>Status</th>
-        <th>Char I</th>
-        <th>Char II</th>
-        <th>Char III</th>
-        <th>Ziel 1</th>
-        <th>Ziel 2</th>
-        </tr>
+      <tr>
+        <th>Name</th><th>Status</th><th>Char I</th><th>Char II</th><th>Char III</th>
+      </tr>
     </thead>
-    <tbody>
-        <tr>
-        <td>Metashi12</td>
-        <td><img src="images/avatar-placeholder.jpg" alt=""> Gestorben</td>
-        <td><a href="#Link zu Todesclip">Charaktername (Klasse / lvl)</a></td>
-        <td><a href="#Link zu Todesclip">Charaktername (Klasse / lvl)</a></td>
-        <td><a href="#Link zu Todesclip">Charaktername (Klasse / lvl)</a></td>
-        </tr>
-    </tbody>
-    </table>
+    <!-- genau diese ID braucht dein renderParticipants -->
+    <tbody id="participants-body"></tbody>
+  </table>
 </section>
 
+
 <!-- Zeitplan -->
-<section id="schedule">
-    <h1>Zeitplan</h1>
-    <div class="day">
-    <h2>Freitag</h2>
-    <ul>
-        <li><strong>17:00</strong> Name</li>
-        <li><strong>17:00</strong> Name</li>
-    </ul>
-    </div>
-    <div class="day">
-    <h2>Samstag</h2>
-    <ul>
-        <li><strong>17:00</strong> Name</li>
-        <li><strong>17:00</strong> Name</li>
-    </ul>
-    </div>
-    <div class="day">
-    <h2>Sonntag</h2>
-    <ul>
-        <li><strong>17:00</strong> Name</li>
-        <li><strong>17:00</strong> Name</li>
-    </ul>
-    </div>
+<section id="schedule" class="tab-content">
+  <h1>Zeitplan</h1>
+  <!-- genau diese ID braucht dein renderSchedule -->
+  <div id="schedule-container"></div>
 </section>
+
 
 <!-- Regeln -->
 <section id="rules">
