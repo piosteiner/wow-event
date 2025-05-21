@@ -1,3 +1,5 @@
+//main.js//
+
 // Simple mobile nav toggle
 document.querySelector('.nav-toggle').addEventListener('click', () => {
   const nav = document.querySelector('nav');
@@ -83,3 +85,22 @@ Promise.all([
   renderSchedule(schedule);
 })
 .catch(err => console.error("Fehler beim Laden aus Google Sheets:", err));
+
+//-----------------------------------
+
+// Tab-Logik
+document.querySelectorAll('.tab-button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.getAttribute('data-tab');
+
+    // 1) alle Buttons deaktiveren
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    // 2) alle Sektionen verstecken
+    document.querySelectorAll('.tab-content').forEach(sec => sec.classList.remove('active'));
+
+    // 3) geklickten Button aktivieren
+    btn.classList.add('active');
+    // 4) zugehörige Sektion einblenden
+    document.getElementById(targetId).classList.add('active');
+  });
+});

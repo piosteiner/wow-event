@@ -1,3 +1,5 @@
+/*style.css*/
+
 body, h1, h2, h3, p, li, th, td, a, nav a, button, input, label {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
@@ -85,4 +87,39 @@ footer { background: #f4f4f4; text-align: center; padding: 1rem; margin-top: 2re
 @media (max-width: 768px) {
   nav { display: none; }
   .nav-toggle { display: block; }
+}
+
+/* ------------------ */
+
+/* Tabs-Leiste */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+}
+.tab-button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  color: #fff;
+  transition: background 0.2s;
+}
+.tab-button:hover {
+  background: rgba(255,255,255,0.3);
+}
+.tab-button.active {
+  background: #fff;
+  color: #111;
+}
+
+/* Tab-Inhalte aus-/einblenden */
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
 }
