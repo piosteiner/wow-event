@@ -53,6 +53,14 @@ body, p, li, th, td, a, nav a {
   margin: 0 auto;
   line-height: 1.6;
   opacity: 0.9;
+    /* halbtransparentes Schwarz */
+  background: rgba(0, 0, 0, 0.5);
+  /* sanfte Abrundung */
+  border-radius: 0.5rem;
+  /* etwas Platz um den Text */
+  padding: 0.5rem 1rem;
+  /* damit der Block nur so breit wie sein Inhalt ist */
+  display: inline-block;
 }
 
 /* Reset & base */
