@@ -106,7 +106,8 @@ nav a {
   font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   border-radius: 0.25rem;
-  color: #741717;
+  color: #cacaca;
+  background: #222;
   transition: background 0.2s;
 }
 .tab-button:hover {
