@@ -1,4 +1,4 @@
-body, p, li, th, td, a, nav a, button, input, label {
+body, h1, h2, h3, p, li, th, td, a, nav a, button, input, label {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
 }
@@ -33,7 +33,7 @@ h1, h2, h3 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
   font-weight: 300;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .hero h3 {
@@ -41,7 +41,6 @@ h1, h2, h3 {
   margin-bottom: 1.5rem;
   font-weight: 400;
   opacity: 0.75;
-  font-style: italic;
 }
 
 .hero p {
