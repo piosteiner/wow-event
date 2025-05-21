@@ -49,22 +49,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 5) Render Participants
-  function renderParticipants(list) {
-    const tbody = document.getElementById('participants-body');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    list.forEach(p => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${p.Name}</td>
-        <td><img src="${p.Avatar}" alt="${p.Name}" width="24"> ${p.Status}</td>
-        <td><a href="${p.Char1_Link}">${p.Char1_Name}</a></td>
-        <td><a href="${p.Char2_Link}">${p.Char2_Name}</a></td>
-        <td><a href="${p.Char3_Link}">${p.Char3_Name}</a></td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
+function renderParticipants(list) {
+  const tbody = document.getElementById('participants-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  list.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${p.streamer}</td>
+      <td>
+        ${p.twitch_link
+          ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">Twitch</a>`
+          : ''}
+      </td>
+      <td>${p.char1 || ''}</td>
+      <td>${p.lvl1 || ''}</td>
+      <td>
+        ${p.death1_clip
+          ? `<a href="${p.death1_clip}" target="_blank" rel="noopener">Clip</a>`
+          : ''}
+      </td>
+      <td>${p.char2 || ''}</td>
+      <td>${p.lvl2 || ''}</td>
+      <td>
+        ${p.death2_clip
+          ? `<a href="${p.death2_clip}" target="_blank" rel="noopener">Clip</a>`
+          : ''}
+      </td>
+      <td>${p.char3 || ''}</td>
+      <td>${p.lvl3 || ''}</td>
+      <td>
+        ${p.death3_clip
+          ? `<a href="${p.death3_clip}" target="_blank" rel="noopener">Clip</a>`
+          : ''}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
   // 6) Render Schedule
   function renderSchedule(list) {
