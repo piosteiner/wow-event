@@ -1,97 +1,98 @@
-/*style.css*/
+/* style.css */
 
-body, h1, h2, h3, p, li, th, td, a, nav a, button, input, label {
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.6;
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Überschriften im Fantasy-Look */
-.hero h1, .hero h2, .hero h3 {
-  font-family: 'Metamorphous', cursive;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+/* Base */
+body, p, li, th, td, a, nav a, button, input, label {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  color: #222;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header & Nav */
+header {
+  background: #111;
+  color: #fff;
+}
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  height: 50px;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
 }
 
 /* Hero Section */
 .hero {
-  background: #360101 url('../images/World_of_Warcraft_Classic_20th_Anniversary_Realms_Screenshots_3.jpg') center/cover no-repeat;
+  background: #360101 url('../images/hero-bg.jpg') center/cover no-repeat;
   color: #fff;
   text-align: center;
   padding: 6rem 1rem;
 }
-
 .hero h1 {
+  font-family: 'Metamorphous', cursive;
   font-size: 3rem;
   line-height: 1.1;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 3px;
-  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
-
+.hero h2,
+.hero h3 {
+  font-family: 'Metamorphous', cursive;
+}
 .hero h2 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
   font-weight: 300;
   opacity: 0.9;
 }
-
 .hero h3 {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   font-weight: 400;
   opacity: 0.75;
 }
-
 .hero p {
   font-size: 1rem;
   max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
-  opacity: 0.9;
-  /* halbtransparentes Schwarz */
+  margin: 1rem auto 0;
   background: rgba(0, 0, 0, 0.5);
-  /* sanfte Abrundung */
   border-radius: 0.5rem;
-  /* etwas Platz um den Text */
   padding: 0.5rem 1rem;
-  /* damit der Block nur so breit wie sein Inhalt ist */
   display: inline-block;
 }
 
-/* Reset & base */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-.container { max-width: 1000px; margin: 0 auto; padding: 1rem; }
-
-/* Header & nav */
-header { background: #111; color: #fff; }
-header .container { display: flex; align-items: center; justify-content: space-between; }
-.logo { height: 50px; }
-nav ul { list-style: none; display: flex; gap: 1rem; }
-nav a { color: #fff; text-decoration: none; }
-.nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; }
-
-/* Table */
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-th, td { padding: 0.5rem; border: 1px solid #ddd; text-align: center; }
-thead { background: #f4f4f4; }
-
-/* Sections */
-section { margin: 2rem 0; }
-.day ul { list-style: none; }
-.video-list li { margin: 0.5rem 0; }
-
-/* Footer */
-footer { background: #f4f4f4; text-align: center; padding: 1rem; margin-top: 2rem; }
-
-/* Responsive nav */
-@media (max-width: 768px) {
-  nav { display: none; }
-  .nav-toggle { display: block; }
-}
-
-/* ------------------ */
-
-/* Tabs-Leiste */
+/* Tabs */
 .tabs {
   display: flex;
   justify-content: center;
@@ -116,10 +117,57 @@ footer { background: #f4f4f4; text-align: center; padding: 1rem; margin-top: 2re
   color: #111;
 }
 
-/* Tab-Inhalte aus-/einblenden */
+/* Tab Content */
 .tab-content {
   display: none;
 }
 .tab-content.active {
   display: block;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+th, td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+/* Schedule Days */
+.day h2 {
+  margin-bottom: 0.5rem;
+}
+.day ul {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+/* Video List */
+.video-list li {
+  margin: 0.5rem 0;
+}
+
+/* Footer */
+footer {
+  background: #f4f4f4;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+  .nav-toggle {
+    display: block;
+  }
+  .hero h1 { font-size: 2.5rem; }
+  .hero h2 { font-size: 1.75rem; }
+  .hero h3 { font-size: 1.25rem; }
 }
