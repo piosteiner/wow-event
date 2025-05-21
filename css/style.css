@@ -117,14 +117,6 @@ nav a {
   color: #111;
 }
 
-/* Tab Content */
-.tab-content {
-  display: none;
-}
-.tab-content.active {
-  display: block;
-}
-
 /* Table */
 table {
   width: 100%;
