@@ -1,7 +1,7 @@
 // main.js
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile nav toggle
+  // 1) Mobile nav toggle
   const navToggle = document.querySelector('.nav-toggle');
   if (navToggle) {
     navToggle.addEventListener('click', () => {
@@ -10,28 +10,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Google Sheet URLs
+  // 2) Google Sheet URLs
   const SHEET_ID = '1dzuO_Uzi4Z5GHi97sE6RjELOrxzRbuRXcl1tg17ODsA';
-  const URL_PARTICIPANTS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Teilnehmer&tqx=out:json`;
-  const URL_SCHEDULE     = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Zeitplan&tqx=out:json`;
+  // CSV-Export des ersten Sheets (GID 0) für Teilnehmer:innen
+  const URL_PARTICIPANTS_CSV = 
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+  // GViz-JSON für das Blatt "Zeitplan"
+  const URL_SCHEDULE = 
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Zeitplan&tqx=out:json`;
 
-  // GViz JSON parser
+  // 3) CSV → Array von Objekten
+  function parseCSV(text) {
+    const [headerLine, ...lines] = text.trim().split('\n');
+    const headers = headerLine.split(',').map(h => h.trim());
+    return lines.map(line => {
+      const cols = line.split(',').map(c => c.trim());
+      return headers.reduce((obj, h, i) => {
+        obj[h] = cols[i] || '';
+        return obj;
+      }, {});
+    });
+  }
+
+  // 4) GViz-JSON parser
   function parseGviz(jsonText) {
-    const json = JSON.parse(
+    const j = JSON.parse(
       jsonText.replace(/^[^(]*\(/, '').replace(/\);?$/, '')
     );
-    const cols = json.table.cols.map(c => c.label);
-    return json.table.rows
+    const cols = j.table.cols.map(c => c.label);
+    return j.table.rows
       .map(r => r.c.map(cell => (cell && cell.v)))
-      .map(values =>
-        cols.reduce((obj, col, i) => {
-          obj[col] = values[i];
-          return obj;
+      .map(vals =>
+        cols.reduce((o, col, i) => {
+          o[col] = vals[i];
+          return o;
         }, {})
       );
   }
 
-  // Render Participants
+  // 5) Render Participants
   function renderParticipants(list) {
     const tbody = document.getElementById('participants-body');
     if (!tbody) return;
@@ -40,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${p.Name}</td>
-        <td><img src="${p.Avatar}" alt="" width="24"> ${p.Status}</td>
+        <td><img src="${p.Avatar}" alt="${p.Name}" width="24"> ${p.Status}</td>
         <td><a href="${p.Char1_Link}">${p.Char1_Name}</a></td>
         <td><a href="${p.Char2_Link}">${p.Char2_Name}</a></td>
         <td><a href="${p.Char3_Link}">${p.Char3_Name}</a></td>
@@ -49,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Render Schedule
+  // 6) Render Schedule
   function renderSchedule(list) {
     const container = document.getElementById('schedule-container');
     if (!container) return;
@@ -74,18 +91,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Fetch and render Google Sheet data
+  // 7) Fetch und rendern
   Promise.all([
-    fetch(URL_PARTICIPANTS).then(r => r.text()).then(parseGviz),
+    fetch(URL_PARTICIPANTS_CSV).then(r => r.text()).then(parseCSV),
     fetch(URL_SCHEDULE).then(r => r.text()).then(parseGviz)
   ])
     .then(([participants, schedule]) => {
       renderParticipants(participants);
       renderSchedule(schedule);
     })
-    .catch(err => console.error('Fehler beim Laden aus Google Sheets:', err));
+    .catch(err => console.error('Fehler beim Laden der Daten:', err));
 
-  // Load external HTML for YouTube & Rules tabs
+  // 8) Externe HTMLs laden (YouTube & Regeln)
   function loadExternalHTML(id, url) {
     fetch(url)
       .then(res => {
@@ -98,11 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => console.error(`Fehler beim Laden von ${url}:`, err));
   }
-
   loadExternalHTML('youtube', 'youtube.html');
-  loadExternalHTML('rules', 'rules.html');
+  loadExternalHTML('rules',   'rules.html');
 
-  // Tab switching logic
+  // 9) Tab-Wechsel-Logik
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.dataset.tab;
