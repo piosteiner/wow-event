@@ -1,5 +1,9 @@
 /* style.css */
 
+html, body {
+  background-color: #213448;
+}
+
 /* Reset */
 * {
   box-sizing: border-box;
@@ -11,7 +15,7 @@
 body, p, li, th, td, a, nav a, button, input, label {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
-  color: #222;
+  color: #ECEFCA;
 }
 
 .container {
