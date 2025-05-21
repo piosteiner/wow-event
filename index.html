@@ -1,40 +1,43 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WoW Classic HC Event</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Metamorphous&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WoW Classic HC Event</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Metamorphous&family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
 <body>
-  <!-- 1) Header (Logo / evtl. Global-Nav) -->
+
+  <!-- Header -->
   <header>
     <div class="container">
-      <img src="images/logo_classic_pandaria.png" alt="WOW Logo" class="logo">
+      <img src="images/logo_classic_pandaria.png" alt="WoW Logo" class="logo">
       <button class="nav-toggle">☰</button>
     </div>
   </header>
 
-  <!-- 2) Hero-Bereich -->
+  <!-- Hero Section -->
   <section id="hero" class="hero">
     <h1>WoW Classic HC Marathon</h1>
     <h2>23.05.2025 - 13.06.2025</h2>
     <h3>Powered by Metashi</h3>
     <p>
-      Erlebe den ultimativen WoW Classic Hardcore Marathon mit Metashi12 und über 100 weiteren Streamer:innen!
+      Erlebe den ultimativen WoW Classic Hardcore Marathon mit Metashi12 und über 100 weiteren Streamer:innen!<br>
       5'000 Euro Preisgeld - 3 Leben, 1 Ziel, volles Adrenalin!
     </p>
   </section>
 
-  <!-- 3) Tab-Buttons -->
+  <!-- Tab Buttons -->
   <div class="tabs">
     <button class="tab-button active" data-tab="participants">Teilnehmer:innen</button>
     <button class="tab-button" data-tab="schedule">Zeitplan</button>
@@ -42,45 +45,54 @@
     <button class="tab-button" data-tab="rules">Regeln</button>
   </div>
 
-  <!-- 4) Tab-Inhalte (anfangs nur Platzhalter / leere Container) -->
+  <!-- Main Content -->
   <main class="container">
+    <!-- Teilnehmer:innen Tab -->
     <section id="participants" class="tab-content active">
       <h1>Teilnehmer:innen</h1>
       <table>
         <thead>
           <tr>
-            <th>Name</th><th>Status</th><th>Char I</th><th>Char II</th><th>Char III</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Char I</th>
+            <th>Char II</th>
+            <th>Char III</th>
           </tr>
         </thead>
         <tbody id="participants-body">
-          <!-- JS füllt hier die Zeilen -->
+          <!-- Wird per JS befüllt -->
         </tbody>
       </table>
     </section>
 
+    <!-- Zeitplan Tab -->
     <section id="schedule" class="tab-content">
       <h1>Zeitplan</h1>
       <div id="schedule-container">
-        <!-- JS fügt hier die Days ein -->
+        <!-- Wird per JS befüllt -->
       </div>
     </section>
 
+    <!-- YouTube Tab -->
     <section id="youtube" class="tab-content">
-      <!-- Wird per Fetch aus youtube.html befüllt -->
+      <!-- Wird per JS aus youtube.html geladen -->
     </section>
 
+    <!-- Regeln Tab -->
     <section id="rules" class="tab-content">
-      <!-- Wird per Fetch aus rules.html befüllt -->
+      <!-- Wird per JS aus rules.html geladen -->
     </section>
   </main>
 
-  <!-- 5) Footer -->
+  <!-- Footer -->
   <footer>
     <div class="container">
       <p>© 2025 Metashi12 • <a href="https://twitch.tv/Metashi12">Impressum</a></p>
     </div>
   </footer>
 
+  <!-- Script -->
   <script src="js/main.js"></script>
 </body>
 </html>
