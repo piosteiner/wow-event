@@ -15,100 +15,72 @@
 </head>
 
 <body>
-<section id="hero" class="hero">
-  <h1>WoW Classic HC Marathon</h1>
-  <h2>23.05.2025 - 13.06.2025</h2>
-  <h3>Powered by Metashi</h3>
-  <p>
-    Erlebe den ultimativen WoW Classic Hardcore Marathon mit Metashi12 und über 100 weiteren Streamer:innen mit ienem Preisgeld von 5'000 Euro!<br>
-    3 Leben, 1 Ziel, volles Adrenalin!
-  </p>
-</section>
+  <!-- 1) Header (Logo / evtl. Global-Nav) -->
+  <header>
+    <div class="container">
+      <img src="images/logo_classic_pandaria.png" alt="WOW Logo" class="logo">
+      <button class="nav-toggle">☰</button>
+    </div>
+  </header>
 
-<div class="tabs">
+  <!-- 2) Hero-Bereich -->
+  <section id="hero" class="hero">
+    <h1>WoW Classic HC Marathon</h1>
+    <h2>23.05.2025 – 13.06.2025</h2>
+    <h3>Powered by Metashi</h3>
+    <p>
+      Erlebe den ultimativen WoW Classic Hardcore Marathon mit Metashi12 und über 100 weiteren Streamer:innen!
+      5'000 Euro Preisgeld – 3 Leben, 1 Ziel, volles Adrenalin!
+    </p>
+  </section>
+
+  <!-- 3) Tab-Buttons -->
+  <div class="tabs">
     <button class="tab-button active" data-tab="participants">Teilnehmer:innen</button>
     <button class="tab-button" data-tab="schedule">Zeitplan</button>
     <button class="tab-button" data-tab="youtube">YouTube</button>
     <button class="tab-button" data-tab="rules">Regeln</button>
-</div>
+  </div>
 
-<main class="container">
-<!-- Teilnehmer:innen -->
-<section id="participants" class="tab-content active">
-<!-- … dein Teilnehmer-HTML … -->
-</section>
+  <!-- 4) Tab-Inhalte (anfangs nur Platzhalter / leere Container) -->
+  <main class="container">
+    <section id="participants" class="tab-content active">
+      <h1>Teilnehmer:innen</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th><th>Status</th><th>Char I</th><th>Char II</th><th>Char III</th>
+          </tr>
+        </thead>
+        <tbody id="participants-body">
+          <!-- JS füllt hier die Zeilen -->
+        </tbody>
+      </table>
+    </section>
 
-<!-- Zeitplan -->
-<section id="schedule" class="tab-content">
-<!-- … dein Zeitplan-HTML … -->
-</section>
+    <section id="schedule" class="tab-content">
+      <h1>Zeitplan</h1>
+      <div id="schedule-container">
+        <!-- JS fügt hier die Days ein -->
+      </div>
+    </section>
 
-<!-- YouTube -->
-<section id="youtube" class="tab-content">
-<!-- … dein YouTube-HTML … -->
-</section>
+    <section id="youtube" class="tab-content">
+      <!-- Wird per Fetch aus youtube.html befüllt -->
+    </section>
 
-<!-- Regeln -->
-<section id="rules" class="tab-content">
-    <!-- … dein Regeln-HTML … -->
-</section>
-</main>
+    <section id="rules" class="tab-content">
+      <!-- Wird per Fetch aus rules.html befüllt -->
+    </section>
+  </main>
 
-<main class="container">
-<!-- Teilnehmer:innen -->
-<section id="participants" class="tab-content active">
-  <h1>Teilnehmer:innen</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th><th>Status</th><th>Char I</th><th>Char II</th><th>Char III</th>
-      </tr>
-    </thead>
-    <!-- genau diese ID braucht dein renderParticipants -->
-    <tbody id="participants-body"></tbody>
-  </table>
-</section>
+  <!-- 5) Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Metashi12 • <a href="https://twitch.tv/Metashi12">Impressum</a></p>
+    </div>
+  </footer>
 
-
-<!-- Zeitplan -->
-<section id="schedule" class="tab-content">
-  <h1>Zeitplan</h1>
-  <!-- genau diese ID braucht dein renderSchedule -->
-  <div id="schedule-container"></div>
-</section>
-
-
-<!-- Regeln -->
-<section id="rules">
-    <h1>Regeln</h1>
-    <p>Regeln für den Metashi12 Hardcore WOW Event:</p>
-    <ul>
-    <li>Alle Spieler:innen müssen jeder Spielzeit streamen.</li>
-    <li>Mindestens 50% der Streamzeit jedes/jeder Teilnehmer:in muss aus dem WOW Event bestehen.</li>
-    <li>Alle Spieler:innen haben 3 Leben.</li>
-    <li>Alle Teilnehmer:innen sind in der Gilde</li>
-    <li>Gehandelt wird nur mit der Gilde.</li>
-    </ul>
-
-    <h2>Ziele</h2>
-    <ul>
-    <li>Ziel 1</li>
-    <li>Ziel 2</li>
-    </ul>
-
-    <h2>Erlaubte Mods</h2>
-    <ul>
-    <li><a href="https://www.nexusmods.com/…">Modname</a></li>
-    </ul>
-</section>
-</main>
-
-<footer>
-<div class="container">
-    <p>© 2025 Metashi12 • <a href="https://twitch.tv/Metashi12">Impressum</a></p>
-</div>
-</footer>
-
-<script src="js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
