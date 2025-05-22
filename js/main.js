@@ -121,9 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.innerHTML = `<span class="status-dot online" title="Online"></span>`;
             })
             .catch(() => {
-            // network/other error → Net Error
+            // network/other error → also show "404"
             const cell = document.getElementById(`live-status-${username}`);
-            if (cell) cell.textContent = 'Net Error';
+            if (cell) cell.textContent = '404';
             });
         }
     });
