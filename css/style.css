@@ -210,3 +210,13 @@ th.sortable.asc::after {
 th.sortable.desc::after {
   content: '↓';
 }
+
+/* Totenkopf-Links nicht unterstreichen */
+a.death-clip {
+  text-decoration: none;
+}
+
+/* Optional: auch beim Hover keine Unterstreichung */
+a.death-clip:hover {
+  text-decoration: none;
+}
