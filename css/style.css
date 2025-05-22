@@ -349,10 +349,18 @@ table td {
 }
 
 /* 3) Kompaktere Zellen auf kleinen Bildschirmen */
-@media (max-width: 600px) {
-  #participants-table th,
-  #participants-table td {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.85rem;
+@media (max-width: 768px) {
+  /* Wrapper auf volle Breite */
+  .table-responsive,
+  #schedule-container {
+    width: 100%;
+    overflow-x: auto; /* bleibt scrollbar, falls zu breit */
+  }
+
+  /* Tabellen selbst dort ebenfalls 100 % */
+  .table-responsive table,
+  .schedule-table {
+    width: 100% !important;
+    min-width: auto;   /* hebt das min-width im Desktop-Layout auf */
   }
 }
