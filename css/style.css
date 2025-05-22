@@ -221,11 +221,6 @@ a.death-clip:hover {
   text-decoration: none;
 }
 
-/* Spielernamen durchstreichen, wenn Klasse dead-player gesetzt */
-a.dead-player {
-  text-decoration: line-through;
-}
-
 /* Links in der ersten Spalte (Spieler:in) nicht unterstreichen */
 #participants-table tbody td:first-child a {
   text-decoration: none;
@@ -234,4 +229,9 @@ a.dead-player {
 /* Optional: beim Hover trotzdem einen Effekt zeigen */
 #participants-table tbody td:first-child a:hover {
   text-decoration: none;
+}
+
+/* Spielernamen durchstreichen, wenn Klasse dead-player gesetzt */
+a.dead-player {
+  text-decoration: line-through;
 }
