@@ -349,24 +349,34 @@ table td {
 }
 
 /* MOBILE */
-
-/* 3) Kompaktere Zellen auf kleinen Bildschirmen */
 @media (max-width: 768px) {
-  /* Wrapper auf volle Breite */
-  .table-responsive,
-  #schedule-container {
-    width: 100%;
-    overflow-x: auto; /* bleibt scrollbar, falls zu breit */
+  /* Tabs kompakter */
+  .tabs {
+    gap: 0.5rem;
+    margin: 1rem 0 0.5rem;
+  }
+  .tab-button {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
   }
 
-  /* Tabellen selbst dort ebenfalls 100 % */
+  /* Scroll-Wrapper auf volle Breite hinausziehen */
+  .table-responsive,
+  #schedule-container {
+    width: calc(100% + 2rem);
+    margin: 0  -1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tabelle passt sich dem Wrapper an */
   .table-responsive table,
   .schedule-table {
     width: 100% !important;
-    min-width: auto;   /* hebt das min-width im Desktop-Layout auf */
+    min-width: 0 !important; /* hebt desktop-min-width auf */
   }
 
-    /* deutliche Schriftverkleinerung in beiden Tabellen: */
+  /* kompaktere Zellen + kleinere Schrift */
   #participants-table th,
   #participants-table td,
   .schedule-table th,
@@ -374,32 +384,9 @@ table td {
     font-size: 0.65rem;
     padding: 0.2rem 0.4rem;
   }
-
-/* Tabelle aus dem Container-Padding herausziehen */
-  .table-responsive,
-  #schedule-container {
-    /* Erhöhe die Breite um die Padding-Links+Rechts der Container */
-    width: calc(100% + 2rem);
-    /* zieh Links und Rechts jeweils 1rem heraus */
-    margin-left: -1rem;
-    margin-right: -1rem;
-    overflow-x: auto;  /* bleibt scrollbar */
-  }
-
-    /* Tabs kompakter machen */
-  .tabs {
-    gap: 0.5rem;           /* weniger Abstand zwischen den Buttons */
-    margin: 1rem 0 0.5rem; /* ruhig auch hier etwas enger */
-  }
-
-  .tab-button {
-    padding: 0.25rem 0.75rem; /* kleinere Innenabstände */
-    font-size: 0.9rem;        /* bei Bedarf etwas kleinere Schrift */
-  }
 }
 
 /* DESKTOP */
-
 @media (min-width: 769px) {
   /* Desktop: keine horizontale Scroll-Leiste */
   .table-responsive,
