@@ -98,23 +98,40 @@ document.addEventListener('DOMContentLoaded', () => {
       tbody.appendChild(tr);
 
       // 5c) fetch live-status and update dot
-      if (username) {
+        if (username) {
         fetch(`https://decapi.me/twitch/uptime/${username}`)
-          .then(r => r.text())
-          .then(text => {
+            .then(r => r.text())
+            .then(text => {
             const cell = document.getElementById(`live-status-${username}`);
             if (!cell) return;
             const dot = cell.querySelector('.status-dot');
-            if (text.includes('is offline')) {
-              dot.classList.replace('online', 'offline');
+
+            if (text.includes('Error from Twitch API')) {
+                // error state
+                dot.classList.remove('online','offline');
+                dot.classList.add('error');
+                dot.title = 'API error';
+            } else if (text.includes('is offline')) {
+                // offline state
+                dot.classList.replace('online', 'offline');
+                dot.title = 'Offline';
             } else {
-              dot.classList.replace('offline', 'online');
+                // online (uptime string) state
+                dot.classList.replace('offline', 'online');
+                dot.title = 'Online';
             }
-          })
-          .catch(() => {
-            // keep red dot on error
-          });
-      }
+            })
+            .catch(() => {
+            // network / other error
+            const cell = document.getElementById(`live-status-${username}`);
+            const dot = cell && cell.querySelector('.status-dot');
+            if (dot) {
+                dot.classList.remove('online','offline');
+                dot.classList.add('error');
+                dot.title = 'Network error';
+            }
+            });
+        }
     });
   }
 
