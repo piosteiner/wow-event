@@ -190,3 +190,23 @@ footer {
 .status-dot.offline {
   background-color: #F44336; /* red */
 }
+
+/* Sorteirbare Spaltenkopfzellen */
+th.sortable {
+  cursor: pointer;
+  position: relative;
+  padding-right: 1.2em;
+}
+th.sortable::after {
+  content: '↕';
+  position: absolute;
+  right: 0.4em;
+  font-size: 0.8em;
+  opacity: 0.6;
+}
+th.sortable.asc::after {
+  content: '↑';
+}
+th.sortable.desc::after {
+  content: '↓';
+}

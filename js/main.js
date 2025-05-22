@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.innerHTML = '';
 
     list.forEach(p => {
-      // 5a) extract Twitch username
       const username = p.twitch_link
         ? p.twitch_link
             .replace(/^https?:\/\/(www\.)?twitch\.tv\//, '')
@@ -61,12 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
             .trim()
         : null;
 
-      // 5b) build the row
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${p.streamer}</td>
-        <td id="live-status-${username}">
-          <span class="status-dot offline"></span>
+        <td id="live-status-${username}"
+            data-live-status="offline">
+          <span class="status-dot offline" title="Offline"></span>
         </td>
         <td>
           ${p.twitch_link
@@ -97,39 +96,38 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       tbody.appendChild(tr);
 
-      // 5c) fetch live-status and update dot
-        if (username) {
+      if (username) {
         fetch(`https://decapi.me/twitch/uptime/${username}`)
-            .then(r => r.text())
-            .then(text => {
+          .then(r => r.text())
+          .then(text => {
             const cell = document.getElementById(`live-status-${username}`);
             if (!cell) return;
 
-            // 1) API‐error case → show "404"
             if (text.includes('Error from Twitch API')) {
-                cell.textContent = '404';
-                return;
+              cell.textContent = '404';
+              cell.dataset.liveStatus = '404';
+              return;
             }
-
-            // 2) Offline case → red dot
             if (text.includes('is offline')) {
-                cell.innerHTML = `<span class="status-dot offline" title="Offline"></span>`;
-                return;
+              cell.innerHTML = `<span class="status-dot offline" title="Offline"></span>`;
+              cell.dataset.liveStatus = 'offline';
+            } else {
+              cell.innerHTML = `<span class="status-dot online" title="Online"></span>`;
+              cell.dataset.liveStatus = 'online';
             }
-
-            // 3) Online case → green dot
-            cell.innerHTML = `<span class="status-dot online" title="Online"></span>`;
-            })
-            .catch(() => {
-            // network/other error → also show "404"
+          })
+          .catch(() => {
             const cell = document.getElementById(`live-status-${username}`);
-            if (cell) cell.textContent = '404';
-            });
-        }
+            if (cell) {
+              cell.textContent = '404';
+              cell.dataset.liveStatus = '404';
+            }
+          });
+      }
     });
   }
 
-  // 6) Render Schedule (unchanged)
+  // 6) Render Schedule
   function renderSchedule(list) {
     const container = document.getElementById('schedule-container');
     if (!container) return;
@@ -162,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(([participants, schedule]) => {
       renderParticipants(participants);
       renderSchedule(schedule);
+      makeTableSortable(); // initialize sorting
     })
     .catch(err => console.error('Fehler beim Laden der Daten:', err));
 
@@ -179,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error(`Fehler beim Laden von ${url}:`, err));
   }
   loadExternalHTML('youtube', 'youtube.html');
-  loadExternalHTML('rules', 'rules.html');
+  loadExternalHTML('rules',   'rules.html');
 
   // 9) Tab switching logic
   document.querySelectorAll('.tab-button').forEach(btn => {
@@ -191,4 +190,41 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById(targetId)?.classList.add('active');
     });
   });
+
+  // 10) Sorting functions
+  function sortTableByColumn(table, colIndex, type, asc = true) {
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const sorted = rows.sort((a, b) => {
+      let av, bv;
+      if (type === 'live') {
+        av = a.cells[colIndex].dataset.liveStatus;
+        bv = b.cells[colIndex].dataset.liveStatus;
+        const rank = s => ({ online: 0, offline: 1, '404': 2 }[s] ?? 3);
+        return (rank(av) - rank(bv)) * (asc ? 1 : -1);
+      } else {
+        av = a.cells[colIndex].textContent.trim().toLowerCase();
+        bv = b.cells[colIndex].textContent.trim().toLowerCase();
+        return av.localeCompare(bv) * (asc ? 1 : -1);
+      }
+    });
+    tbody.innerHTML = '';
+    sorted.forEach(r => tbody.appendChild(r));
+  }
+
+  function makeTableSortable() {
+    const table = document.getElementById('participants-table');
+    if (!table) return;
+    const state = {};
+    table.querySelectorAll('th.sortable').forEach((th, idx) => {
+      const type = th.dataset.sort;
+      state[type] = true;
+      th.addEventListener('click', () => {
+        table.querySelectorAll('th.sortable').forEach(x => x.classList.remove('asc','desc'));
+        sortTableByColumn(table, idx, type, state[type]);
+        th.classList.add(state[type] ? 'asc' : 'desc');
+        state[type] = !state[type];
+      });
+    });
+  }
 });
