@@ -231,3 +231,8 @@ a.death-clip:hover {
 #participants-table tbody td:first-child a:hover {
   text-decoration: none;
 }
+
+/* Spielernamen durchstreichen, wenn Klasse dead-player gesetzt */
+a.player-out {
+  text-decoration: line-through;
+}

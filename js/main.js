@@ -97,6 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       tbody.appendChild(tr);
 
+    if (p.death3_clip) {
+    const nameLink = tr.querySelector('td:first-child a');
+    if (nameLink) {
+        nameLink.classList.add('player-out');
+    }
+    }
+
+
       if (username) {
         fetch(`https://decapi.me/twitch/uptime/${username}`)
           .then(r => r.text())
