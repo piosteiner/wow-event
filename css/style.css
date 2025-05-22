@@ -363,4 +363,13 @@ table td {
     width: 100% !important;
     min-width: auto;   /* hebt das min-width im Desktop-Layout auf */
   }
+
+    /* deutliche Schriftverkleinerung in beiden Tabellen: */
+  #participants-table th,
+  #participants-table td,
+  .schedule-table th,
+  .schedule-table td {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+  }
 }
