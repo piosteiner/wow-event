@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const URL_SCHEDULE =
     `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Zeitplan&tqx=out:json`;
 
-  // 3) Speicher für geladene Daten
+  // 3) Speicher für geladene Daten (falls du sie später brauchst)
   let participantsData = [];
   let scheduleData     = [];
 
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 8) Fetch & initiales Rendern
+  // 8) Initial Fetch & Render
   Promise.all([
     fetch(URL_PARTICIPANTS_CSV).then(r => r.text()).then(parseCSV),
     fetch(URL_SCHEDULE).then(r => r.text()).then(parseGviz)
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(err => console.error('Fehler beim Laden der Daten:', err));
 
-  // 9) External HTML für YouTube & Regeln
+  // 9) External HTML for YouTube & Rules
   function loadExternalHTML(id, url) {
     fetch(url)
       .then(res => {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadExternalHTML('youtube', 'youtube.html');
   loadExternalHTML('rules',   'rules.html');
 
-  // 10) Tab switching mit Re-Render
+  // 10) Tab switching (einfach show/hide)
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.dataset.tab;
@@ -201,9 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
       const sec = document.getElementById(targetId);
       if (sec) sec.classList.add('active');
-      // Re-Render beim Zurück zu Teilnehmer:innen oder Zeitplan
-      if (targetId === 'participants') renderParticipants(participantsData);
-      if (targetId === 'schedule')     renderSchedule(scheduleData);
+      // **kein** erneutes rendern!
     });
   });
 
@@ -211,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function sortTableByColumn(table, colIndex, type, asc = true) {
     const tbody = table.querySelector('tbody');
     const rows  = Array.from(tbody.querySelectorAll('tr'));
-
     const sorted = rows.sort((a, b) => {
       if (type === 'live') {
         const rank = s => ({ online: 0, offline: 1, '404': 2 }[s] ?? 3);
@@ -226,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const tb = b.cells[colIndex].textContent.trim().toLowerCase();
       return ta.localeCompare(tb) * (asc ? 1 : -1);
     });
-
     tbody.innerHTML = '';
     sorted.forEach(r => tbody.appendChild(r));
   }
