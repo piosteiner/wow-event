@@ -348,6 +348,8 @@ table td {
   min-width: 700px; /* je nach Spaltenzahl anpassen */
 }
 
+/* MOBILE */
+
 /* 3) Kompaktere Zellen auf kleinen Bildschirmen */
 @media (max-width: 768px) {
   /* Wrapper auf volle Breite */
@@ -373,6 +375,18 @@ table td {
     padding: 0.2rem 0.4rem;
   }
 }
+/* Tabelle aus dem Container-Padding herausziehen */
+  .table-responsive,
+  #schedule-container {
+    /* Erhöhe die Breite um die Padding-Links+Rechts der Container */
+    width: calc(100% + 2rem);
+    /* zieh Links und Rechts jeweils 1rem heraus */
+    margin-left: -1rem;
+    margin-right: -1rem;
+    overflow-x: auto;  /* bleibt scrollbar */
+  }
+
+/* DESKTOP */
 
 @media (min-width: 769px) {
   /* Desktop: keine horizontale Scroll-Leiste */
