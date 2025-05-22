@@ -174,9 +174,15 @@ footer {
   .nav-toggle {
     display: block;
   }
-  .hero h1 { font-size: 2.5rem; }
-  .hero h2 { font-size: 1.75rem; }
-  .hero h3 { font-size: 1.25rem; }
+  .hero h1 {
+    font-size: 2.5rem; }
+  .hero h2 {
+    font-size: 1.75rem; }
+  .hero h3 {
+    font-size: 1.25rem; }
+  footer {
+  font-size: 0.6rem;
+}
 }
 
 /* status‐dot */
