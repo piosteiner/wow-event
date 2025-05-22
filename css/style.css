@@ -220,3 +220,14 @@ a.death-clip {
 a.death-clip:hover {
   text-decoration: none;
 }
+
+
+/* Links in der ersten Spalte (Spieler:in) nicht unterstreichen */
+#participants-table tbody td:first-child a {
+  text-decoration: none;
+}
+
+/* Optional: beim Hover trotzdem einen Effekt zeigen */
+#participants-table tbody td:first-child a:hover {
+  text-decoration: none;
+}
