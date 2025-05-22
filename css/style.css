@@ -244,3 +244,10 @@ a.death-clip:hover {
 #participants-table tbody tr:nth-child(even) {
   background-color: #2a5079;
 }
+
+/* Keine Rahmen an Tabelle, Kopf- und Zellen */
+#participants-table,
+#participants-table th,
+#participants-table td {
+  border: none;
+}
