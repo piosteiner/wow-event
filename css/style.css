@@ -309,3 +309,15 @@ table td {
   color: #ECEFCA;
   line-height: 1.2;
 }
+
+/* vertical separators in schedule table */
+.schedule-table th,
+.schedule-table td {
+  /* adjust color to match your design */
+  border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+.schedule-table th:last-child,
+.schedule-table td:last-child {
+  border-right: none;
+}
