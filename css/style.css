@@ -245,9 +245,8 @@ a.death-clip:hover {
   background-color: #2a5079;
 }
 
-/* Keine Rahmen an Tabelle, Kopf- und Zellen */
-#participants-table,
-#participants-table th,
-#participants-table td {
+table,
+table th,
+table td {
   border: none;
 }
