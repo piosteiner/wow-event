@@ -4,6 +4,10 @@ html, body, header, footer {
   background-color: #3d1f17;
 }
 
+body {
+  min-height: 101vh;
+}
+
 /* Reset */
 * {
   box-sizing: border-box;
