@@ -292,7 +292,7 @@ table td {
 /* Erste Spalte der Schedule-Tabelle */
 .schedule-table tbody tr td:first-child {
   background-color: #29130d;
-  color: #94B4C1;
+  color: #f1b655;
 }
 
 .schedule-table tbody tr:nth-child(even) { background: #2a1a16; }
