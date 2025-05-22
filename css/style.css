@@ -1,7 +1,7 @@
 /* style.css */
 
 html, body, header, footer {
-  background-color: #25100a;
+  background-color: #50261a;
 }
 
 /* Reset */
@@ -233,7 +233,7 @@ a.death-clip:hover {
 
 /* Header-Row der Teilnehmer:innen-Tabelle */
 #participants-table thead tr {
-  background-color: #240b05;
+  background-color: #2e1008;
 }
 
 #participants-table thead tr th {
@@ -242,7 +242,7 @@ a.death-clip:hover {
 
 /* Zebra-Streifen in der Teilnehmer:innen-Tabelle */
 #participants-table tbody tr:nth-child(even) {
-  background-color: #45260d;
+  background-color: #4b3120;
 }
 
 table,
