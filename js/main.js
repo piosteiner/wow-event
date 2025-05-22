@@ -17,7 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const URL_SCHEDULE =
     `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Zeitplan&tqx=out:json`;
 
-  // 3) CSV → Array von Objekten
+  // 3) Speicher für geladene Daten
+  let participantsData = [];
+  let scheduleData     = [];
+
+  // 4) CSV → Array von Objekten
   function parseCSV(text) {
     const [headerLine, ...lines] = text.trim().split('\n');
     const headers = headerLine.split(',').map(h => h.trim());
@@ -30,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4) GViz-JSON parser
+  // 5) GViz-JSON parser
   function parseGviz(jsonText) {
     const j = JSON.parse(
       jsonText.replace(/^[^(]*\(/, '').replace(/\);?$/, '')
@@ -46,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       );
   }
 
-  // 5) Render Participants
+  // 6) Render Participants
   function renderParticipants(list) {
     const tbody = document.getElementById('participants-body');
     if (!tbody) return;
@@ -72,31 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${p.char1 || ''}</td>
         <td>${p.class1 || ''}</td>
         <td>${p.lvl1 || ''}</td>
-        <td>
-          ${p.death1_clip
+        <td>${
+          p.death1_clip
             ? `<a class="death-clip" href="${p.death1_clip}" target="_blank" rel="noopener">🎬💀</a>`
-            : ''}
-        </td>
+            : ''
+        }</td>
         <td>${p.char2 || ''}</td>
         <td>${p.class2 || ''}</td>
         <td>${p.lvl2 || ''}</td>
-        <td>
-          ${p.death2_clip
+        <td>${
+          p.death2_clip
             ? `<a class="death-clip" href="${p.death2_clip}" target="_blank" rel="noopener">🎬💀</a>`
-            : ''}
-        </td>
+            : ''
+        }</td>
         <td>${p.char3 || ''}</td>
         <td>${p.class3 || ''}</td>
         <td>${p.lvl3 || ''}</td>
-        <td>
-          ${p.death3_clip
+        <td>${
+          p.death3_clip
             ? `<a class="death-clip" href="${p.death3_clip}" target="_blank" rel="noopener">🎬💀</a>`
-            : ''}
-        </td>
+            : ''
+        }</td>
       `;
       tbody.appendChild(tr);
 
-      // strike-through first cell if last cell contains the skull link
+      // Durchstreich-Logik: wenn Totenkopf in letzter Spalte
       const lastCell = tr.querySelector('td:last-child');
       if (lastCell && lastCell.textContent.includes('🎬💀')) {
         tr.querySelector('td:first-child').style.textDecoration = 'line-through';
@@ -112,9 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (text.includes('Error from Twitch API')) {
               cell.textContent = '404';
               cell.dataset.liveStatus = '404';
-              return;
-            }
-            if (text.includes('is offline')) {
+            } else if (text.includes('is offline')) {
               cell.innerHTML = `<span class="status-dot offline" title="Offline"></span>`;
               cell.dataset.liveStatus = 'offline';
             } else {
@@ -133,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6) Render Schedule
+  // 7) Render Schedule
   function renderSchedule(list) {
     const container = document.getElementById('schedule-container');
     if (!container) return;
@@ -158,19 +160,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 7) Fetch & render both sheets
+  // 8) Fetch & initiales Rendern
   Promise.all([
     fetch(URL_PARTICIPANTS_CSV).then(r => r.text()).then(parseCSV),
     fetch(URL_SCHEDULE).then(r => r.text()).then(parseGviz)
   ])
     .then(([participants, schedule]) => {
-      renderParticipants(participants);
-      renderSchedule(schedule);
-      makeTableSortable(); // initialize sorting after rows exist
+      participantsData = participants;
+      scheduleData     = schedule;
+      renderParticipants(participantsData);
+      renderSchedule(scheduleData);
+      makeTableSortable();
     })
     .catch(err => console.error('Fehler beim Laden der Daten:', err));
 
-  // 8) Load external HTML for YouTube & Rules
+  // 9) External HTML für YouTube & Regeln
   function loadExternalHTML(id, url) {
     fetch(url)
       .then(res => {
@@ -186,34 +190,41 @@ document.addEventListener('DOMContentLoaded', () => {
   loadExternalHTML('youtube', 'youtube.html');
   loadExternalHTML('rules',   'rules.html');
 
-  // 9) Tab switching logic
+  // 10) Tab switching mit Re-Render
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.dataset.tab;
+      // Buttons
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById(targetId)?.classList.add('active');
+      // Sections
+      document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
+      const sec = document.getElementById(targetId);
+      if (sec) sec.classList.add('active');
+      // Re-Render beim Zurück zu Teilnehmer:innen oder Zeitplan
+      if (targetId === 'participants') renderParticipants(participantsData);
+      if (targetId === 'schedule')     renderSchedule(scheduleData);
     });
   });
 
-  // 10) Sorting functions
-
+  // 11) Sortier-Logik
   function sortTableByColumn(table, colIndex, type, asc = true) {
     const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const rows  = Array.from(tbody.querySelectorAll('tr'));
 
     const sorted = rows.sort((a, b) => {
       if (type === 'live') {
         const rank = s => ({ online: 0, offline: 1, '404': 2 }[s] ?? 3);
-        const av = a.cells[colIndex].dataset.liveStatus;
-        const bv = b.cells[colIndex].dataset.liveStatus;
-        return (rank(av) - rank(bv)) * (asc ? 1 : -1);
-      } else {
-        const av = a.cells[colIndex].textContent.trim().toLowerCase();
-        const bv = b.cells[colIndex].textContent.trim().toLowerCase();
-        return av.localeCompare(bv) * (asc ? 1 : -1);
+        return (rank(a.cells[colIndex].dataset.liveStatus) - rank(b.cells[colIndex].dataset.liveStatus)) * (asc ? 1 : -1);
       }
+      if (type.startsWith('lvl')) {
+        const na = parseInt(a.cells[colIndex].textContent) || 0;
+        const nb = parseInt(b.cells[colIndex].textContent) || 0;
+        return (na - nb) * (asc ? 1 : -1);
+      }
+      const ta = a.cells[colIndex].textContent.trim().toLowerCase();
+      const tb = b.cells[colIndex].textContent.trim().toLowerCase();
+      return ta.localeCompare(tb) * (asc ? 1 : -1);
     });
 
     tbody.innerHTML = '';
@@ -224,23 +235,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const table = document.getElementById('participants-table');
     if (!table) return;
     const state = {};
-
     table.querySelectorAll('th.sortable').forEach(th => {
       const type = th.dataset.sort;
-      state[type] = true; // start ascending
-
+      state[type] = true;
       th.addEventListener('click', () => {
-        // reset all arrows
         table.querySelectorAll('th.sortable').forEach(x => x.classList.remove('asc','desc'));
-
-        // use the real column index
         const colIndex = th.cellIndex;
         sortTableByColumn(table, colIndex, type, state[type]);
-
-        // show arrow direction
         th.classList.add(state[type] ? 'asc' : 'desc');
-
-        // toggle for next click
         state[type] = !state[type];
       });
     });
