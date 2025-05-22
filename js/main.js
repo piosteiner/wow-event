@@ -66,8 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">${p.streamer}</a>`
           : p.streamer}
         </td>
-        <td id="live-status-${username}"
-            data-live-status="offline">
+        <td id="live-status-${username}" data-live-status="offline">
           <span class="status-dot offline" title="Offline"></span>
         </td>
         <td>${p.char1 || ''}</td>
@@ -97,19 +96,19 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       tbody.appendChild(tr);
 
-    const lastCell = tr.querySelector('td:last-child');
-    if (lastCell && lastCell.textContent.includes('🎬💀')) {
-      tr.querySelector('td:first-child').style.textDecoration = 'line-through';
-    }
+      // strike-through first cell if last cell contains the skull link
+      const lastCell = tr.querySelector('td:last-child');
+      if (lastCell && lastCell.textContent.includes('🎬💀')) {
+        tr.querySelector('td:first-child').style.textDecoration = 'line-through';
+      }
 
-
+      // fetch live-status
       if (username) {
         fetch(`https://decapi.me/twitch/uptime/${username}`)
           .then(r => r.text())
           .then(text => {
             const cell = document.getElementById(`live-status-${username}`);
             if (!cell) return;
-
             if (text.includes('Error from Twitch API')) {
               cell.textContent = '404';
               cell.dataset.liveStatus = '404';
@@ -167,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(([participants, schedule]) => {
       renderParticipants(participants);
       renderSchedule(schedule);
-      makeTableSortable(); // initialize sorting
+      makeTableSortable(); // initialize sorting after rows exist
     })
     .catch(err => console.error('Fehler beim Laden der Daten:', err));
 
@@ -199,22 +198,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 10) Sorting functions
+
   function sortTableByColumn(table, colIndex, type, asc = true) {
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.querySelectorAll('tr'));
+
     const sorted = rows.sort((a, b) => {
-      let av, bv;
       if (type === 'live') {
-        av = a.cells[colIndex].dataset.liveStatus;
-        bv = b.cells[colIndex].dataset.liveStatus;
         const rank = s => ({ online: 0, offline: 1, '404': 2 }[s] ?? 3);
+        const av = a.cells[colIndex].dataset.liveStatus;
+        const bv = b.cells[colIndex].dataset.liveStatus;
         return (rank(av) - rank(bv)) * (asc ? 1 : -1);
       } else {
-        av = a.cells[colIndex].textContent.trim().toLowerCase();
-        bv = b.cells[colIndex].textContent.trim().toLowerCase();
+        const av = a.cells[colIndex].textContent.trim().toLowerCase();
+        const bv = b.cells[colIndex].textContent.trim().toLowerCase();
         return av.localeCompare(bv) * (asc ? 1 : -1);
       }
     });
+
     tbody.innerHTML = '';
     sorted.forEach(r => tbody.appendChild(r));
   }
@@ -223,13 +224,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const table = document.getElementById('participants-table');
     if (!table) return;
     const state = {};
-    table.querySelectorAll('th.sortable').forEach((th, idx) => {
+
+    table.querySelectorAll('th.sortable').forEach(th => {
       const type = th.dataset.sort;
-      state[type] = true;
+      state[type] = true; // start ascending
+
       th.addEventListener('click', () => {
+        // reset all arrows
         table.querySelectorAll('th.sortable').forEach(x => x.classList.remove('asc','desc'));
-        sortTableByColumn(table, idx, type, state[type]);
+
+        // use the real column index
+        const colIndex = th.cellIndex;
+        sortTableByColumn(table, colIndex, type, state[type]);
+
+        // show arrow direction
         th.classList.add(state[type] ? 'asc' : 'desc');
+
+        // toggle for next click
         state[type] = !state[type];
       });
     });
