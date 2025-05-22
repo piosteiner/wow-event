@@ -55,11 +55,14 @@ function renderParticipants(list) {
   tbody.innerHTML = '';
 
   list.forEach(p => {
-    // extract Twitch username from URL
+    // Username aus twitch_link extrahieren:
+    // Entfernt "http(s)://", "www." und alles bis und mit "twitch.tv/"
     const username = p.twitch_link
-      ? p.twitch_link.replace(/.*twitch\.tv\//, '').replace(/\/.*$/, '')
+      ? p.twitch_link
+          .replace(/^https?:\/\/(www\.)?twitch\.tv\//, '')
+          .replace(/\/$/, '')
+          .trim()
       : null;
-    const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${p.streamer}</td>
       <td id="live-status-${username}">
