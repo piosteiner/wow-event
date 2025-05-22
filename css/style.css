@@ -279,3 +279,33 @@ table td {
 .schedule-table {
   min-width: 800px; /* je nach Spaltenzahl anpassen */
 }
+
+/* YouTube: responsive card grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.video-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.video-card img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+.video-card h3 {
+  font-size: 1rem;
+  margin: 0.5rem;
+  color: #ECEFCA;
+  line-height: 1.2;
+}

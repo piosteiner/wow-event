@@ -171,6 +171,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   loadExternalHTML('youtube','youtube.html');
   loadExternalHTML('rules',  'rules.html');
+ 
+    // once youtube.html has been loaded, transform links → cards
+    function enhanceYouTubeCards() {
+    const list = document.querySelector('#youtube .video-list');
+    if (!list) return;
+
+    // Create a grid container
+    const grid = document.createElement('div');
+    grid.className = 'video-grid';
+
+    // For each link in the list
+    list.querySelectorAll('a').forEach(a => {
+        // extract the video ID (the "v" param)
+        const url = new URL(a.href);
+        const vid = url.searchParams.get('v');
+        const title = a.textContent.trim();
+
+        // thumbnail URL pattern
+        const thumb = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
+
+        // build the card
+        const card = document.createElement('div');
+        card.className = 'video-card';
+        card.innerHTML = `
+        <a href="${a.href}" target="_blank" rel="noopener">
+            <img src="${thumb}" alt="${title}">
+            <h3>${title}</h3>
+        </a>
+        `;
+        grid.appendChild(card);
+    });
+
+    // remove old list and append grid
+    list.remove();
+    document.getElementById('youtube').appendChild(grid);
+    }
+
+    // call it after a small delay so that loadExternalHTML has injected the markup
+    setTimeout(enhanceYouTubeCards, 200);
+
 
   // 9) Tab switching (show/hide) + force reload on participants
   document.querySelectorAll('.tab-button').forEach(btn => {
