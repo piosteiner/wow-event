@@ -32,7 +32,7 @@
 
   <!-- Tab Buttons -->
   <div class="tabs">
-    <button class="tab-button active" data-tab="participants-table">Teilnehmer:innen</button>
+    <button class="tab-button active" data-tab="participants">Teilnehmer:innen</button>
     <button class="tab-button" data-tab="schedule">Events</button>
     <button class="tab-button" data-tab="youtube">YouTube</button>
     <button class="tab-button" data-tab="rules">Regeln</button>
@@ -41,30 +41,32 @@
   <!-- Main Content -->
   <main class="container">
     <!-- Teilnehmer:innen Tab -->
-    <section id="participants-table" class="tab-content active">
-        <table>
-        <thead>
+    <section id="participants" class="tab-content active">
+      <div class="table-responsive">
+        <table id="participants-table">
+          <thead>
             <tr>
-            <th class="sortable" data-sort="streamer">Spieler:in</th>
-            <th class="sortable" data-sort="live">Live</th>
-            <th>Character 1</th>
-            <th class="sortable" data-sort="class1">Klasse </th>
-            <th>LVL</th>
-            <th>Death Clip</th>
-            <th>Character 2</th>
-            <th class="sortable" data-sort="class2">Klasse </th>
-            <th>LVL</th>
-            <th>Death Clip</th>
-            <th>Character 3</th>
-            <th class="sortable" data-sort="class3">Klasse </th>
-            <th>LVL</th>
-            <th>Death Clip</th>
+              <th class="sortable" data-sort="streamer">Spieler:in</th>
+              <th class="sortable" data-sort="live">Live</th>
+              <th>Character 1</th>
+              <th class="sortable" data-sort="class1">Klasse</th>
+              <th class="sortable" data-sort="lvl1">LVL</th>
+              <th>Death Clip</th>
+              <th>Character 2</th>
+              <th class="sortable" data-sort="class2">Klasse</th>
+              <th class="sortable" data-sort="lvl2">LVL</th>
+              <th>Death Clip</th>
+              <th>Character 3</th>
+              <th class="sortable" data-sort="class3">Klasse</th>
+              <th class="sortable" data-sort="lvl3">LVL</th>
+              <th>Death Clip</th>
             </tr>
-        </thead>
-        <tbody id="participants-body">
-          <!-- Wird per JS befüllt -->
-        </tbody>
+          </thead>
+          <tbody id="participants-body">
+            <!-- Wird per JS befüllt -->
+          </tbody>
         </table>
+      </div>
     </section>
 
     <!-- Zeitplan Tab -->
@@ -89,7 +91,7 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p><i>Diese Website ist ein Projekt aus der Community zum World of Warcraft Clasic Hardcore Event von Metashi12.<br>Die Website ist von der Website von <a href="https://soulkeepers.online/">Soulkeepers</a> inspiriert.</i></p>
+      <p><i>Diese Website ist ein Projekt aus der Community zum World of Warcraft Classic Hardcore Event von Metashi12.<br>Die Website ist von der Website von <a href="https://soulkeepers.online/">Soulkeepers</a> inspiriert.</i></p>
     </div>
   </footer>
 
