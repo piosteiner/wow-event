@@ -230,3 +230,12 @@ a.death-clip:hover {
 #participants-table tbody td:first-child a:hover {
   text-decoration: none;
 }
+
+/* Header-Row der Teilnehmer:innen-Tabelle */
+#participants-table thead tr {
+  background-color: #132130;
+}
+
+#participants-table thead tr th {
+  color: #94B4C1;
+}
