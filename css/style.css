@@ -373,3 +373,18 @@ table td {
     padding: 0.2rem 0.4rem;
   }
 }
+
+@media (min-width: 769px) {
+  /* Desktop: keine horizontale Scroll-Leiste */
+  .table-responsive,
+  #schedule-container {
+    overflow-x: visible;  /* Tabellen dürfen sich ausbreiten */
+  }
+
+  /* Tabellenbreite automatisch anpassen */
+  .table-responsive table,
+  .schedule-table {
+    width: auto !important;
+    min-width: auto !important;
+  }
+}
