@@ -212,11 +212,11 @@ th.sortable.desc::after {
 }
 
 /* Totenkopf-Links nicht unterstreichen */
-a.no_underline {
+a.death-clip {
   text-decoration: none;
 }
 
 /* Optional: auch beim Hover keine Unterstreichung */
-a.no_underline:hover {
+a.death-clip:hover {
   text-decoration: none;
 }

@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${p.twitch_link
-          ? `<a class="no_underline" href="${p.twitch_link}" target="_blank" rel="noopener">${p.streamer}</a>`
+          ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">${p.streamer}</a>`
           : p.streamer}
         </td>
         <td id="live-status-${username}"
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${p.lvl1 || ''}</td>
         <td>
           ${p.death1_clip
-            ? `<a class="no_underline" href="${p.death1_clip}" target="_blank" rel="noopener">🎬💀</a>`
+            ? `<a class="death-clip" href="${p.death1_clip}" target="_blank" rel="noopener">🎬💀</a>`
             : ''}
         </td>
         <td>${p.char2 || ''}</td>
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${p.lvl2 || ''}</td>
         <td>
           ${p.death2_clip
-            ? `<a class="no_underline" href="${p.death2_clip}" target="_blank" rel="noopener">🎬💀</a>`
+            ? `<a class="death-clip" href="${p.death2_clip}" target="_blank" rel="noopener">🎬💀</a>`
             : ''}
         </td>
         <td>${p.char3 || ''}</td>
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${p.lvl3 || ''}</td>
         <td>
           ${p.death3_clip
-            ? `<a class="no_underline" href="${p.death3_clip}" target="_blank" rel="noopener">🎬💀</a>`
+            ? `<a class="death-clip" href="${p.death3_clip}" target="_blank" rel="noopener">🎬💀</a>`
             : ''}
         </td>
       `;
