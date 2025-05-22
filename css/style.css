@@ -28,8 +28,7 @@ html, body, header, footer {
 body, p, li, th, td, a, nav a, button, input, label {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
-  color: #fae8ce
-;
+  color: #f3d9b4;
 }
 
 .container {
@@ -122,7 +121,7 @@ nav a {
   font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   border-radius: 0.25rem;
-  color: #fae8ce
+  color: #f3d9b4
 ;
   background: #29130d;
   transition: background 0.2s;
@@ -131,7 +130,7 @@ nav a {
   background: rgba(255,255,255,0.3);
 }
 .tab-button.active {
-  background: #fae8ce;
+  background: #f3d9b4;
   color: #29130d;
 }
 
@@ -285,7 +284,7 @@ table td {
 #participants-table td:nth-child(6),
 #participants-table th:nth-child(10),
 #participants-table td:nth-child(10) {
-  border-right: 1px solid #fae8ce
+  border-right: 1px solid #f3d9b4
 ;
 }
 
@@ -332,7 +331,7 @@ table td {
 .video-card h3 {
   font-size: 1rem;
   margin: 0.5rem;
-  color: #fae8ce
+  color: #f3d9b4
 ;
   line-height: 1.2;
 }
@@ -355,7 +354,7 @@ table td {
   position: sticky;
   left: 0;
   background-color: #29130d; /* same bg as your header/first-col style */
-  color: #fae8ce
+  color: #f3d9b4
 ;            /* match your first-col text color */
   z-index: 2;                /* sit above the other cells */
 }
@@ -492,7 +491,7 @@ table td {
 }
 
 .rules-card a:hover {
-  color: #fae8ce
+  color: #f3d9b4
 ;
   text-decoration: none;
 }
