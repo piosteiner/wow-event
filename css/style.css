@@ -321,3 +321,18 @@ table td {
 .schedule-table td:last-child {
   border-right: none;
 }
+
+/* freeze the first column */
+.schedule-table th:first-child,
+.schedule-table td:first-child {
+  position: sticky;
+  left: 0;
+  background-color: #29130d; /* same bg as your header/first-col style */
+  color: #94B4C1;            /* match your first-col text color */
+  z-index: 2;                /* sit above the other cells */
+}
+
+/* make sure your header cell sits on top of body cells */
+.schedule-table thead th:first-child {
+  z-index: 3;
+}
