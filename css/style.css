@@ -1,7 +1,7 @@
 /* style.css */
 
 html, body, header, footer {
-  background-color: #49180a;
+  background-color: #25100a;
 }
 
 /* Reset */
@@ -233,7 +233,7 @@ a.death-clip:hover {
 
 /* Header-Row der Teilnehmer:innen-Tabelle */
 #participants-table thead tr {
-  background-color: #422818;
+  background-color: #240b05;
 }
 
 #participants-table thead tr th {
