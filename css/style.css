@@ -55,7 +55,7 @@ nav a {
 
 /* Hero Section */
 .hero {
-  background: #3d1f17 url('../images/World_of_Warcraft_Classic_20th_Anniversary_Realms_Screenshots_3.jpg') center/cover no-repeat;
+  background: #3d1f17 url('../images/World_of_Warcraft_Classic_20th_Anniversary_Realms_Screenshots_3.jpg') center/cover no-repeat; /* image source: WC30th Direct - WoW Classic 20th Anniversary Edition Screenshots - https://blizzard.gamespress.com/World-of-Warcraft/Focus/WC30th-Direct---WoW-Classic-20th-Anniversary-Edition-Screenshots*/
   color: #fff9ef;
   text-align: center;
   padding: 6rem 1rem;
