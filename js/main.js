@@ -162,6 +162,36 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   .catch(err => console.error('Fehler beim Laden der Daten:', err));
 
+// Poll every 5 seconds for updates
+  setInterval(() => {
+    // re-fetch participants
+    fetch(URL_PARTICIPANTS_CSV)
+      .then(r => r.text())
+      .then(parseCSV)
+      .then(newParts => {
+        participantsData = newParts;
+        // only re-render if the participants tab is visible
+        if (document.getElementById('participants').classList.contains('active')) {
+          renderParticipants(participantsData);
+        }
+      })
+      .catch(console.error);
+
+    // re-fetch schedule
+    fetch(URL_SCHEDULE_CSV)
+      .then(r => r.text())
+      .then(parseCSV)
+      .then(newSched => {
+        scheduleData = newSched;
+        // only re-render if the schedule tab is visible
+        if (document.getElementById('schedule').classList.contains('active')) {
+          renderSchedule(scheduleData);
+        }
+      })
+      .catch(console.error);
+  }, 5000);
+  // —— END POLLING BLOCK ——
+
   // 8) External HTML for YouTube & Rules
   function loadExternalHTML(id, url) {
     fetch(url)
