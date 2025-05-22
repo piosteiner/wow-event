@@ -110,7 +110,7 @@ nav a {
   cursor: pointer;
   border-radius: 0.25rem;
   color: #ECEFCA;
-  background: #3a1f17;
+  background: #29130d;
   transition: background 0.2s;
 }
 .tab-button:hover {
@@ -118,7 +118,7 @@ nav a {
 }
 .tab-button.active {
   background: #ECEFCA;
-  color: #3a1f17;
+  color: #29130d;
 }
 
 /* Tab Content */
