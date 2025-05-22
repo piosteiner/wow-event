@@ -62,15 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${p.streamer}</td>
+        <td>${p.twitch_link
+          ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">${p.streamer}</a>`
+          : p.streamer}
+        </td>
         <td id="live-status-${username}"
             data-live-status="offline">
           <span class="status-dot offline" title="Offline"></span>
-        </td>
-        <td>
-          ${p.twitch_link
-            ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">Twitch</a>`
-            : ''}
         </td>
         <td>${p.char1 || ''}</td>
         <td>${p.lvl1 || ''}</td>
