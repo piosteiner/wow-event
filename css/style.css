@@ -263,6 +263,17 @@ table td {
   color: #94B4C1;
 }
 
+/* vertikale Trenner in der Teilnehmer:innen-Tabelle */
+#participants-table th:nth-child(2),
+#participants-table td:nth-child(2),
+#participants-table th:nth-child(6),
+#participants-table td:nth-child(6),
+#participants-table th:nth-child(10),
+#participants-table td:nth-child(10) {
+  border-right: 1px solid #ECEFCA;
+}
+
+
 /* Erste Spalte der Schedule-Tabelle */
 .schedule-table tbody tr td:first-child {
   background-color: #29130d;
@@ -327,7 +338,7 @@ table td {
   position: sticky;
   left: 0;
   background-color: #29130d; /* same bg as your header/first-col style */
-  color: #94B4C1;            /* match your first-col text color */
+  color: #ECEFCA;            /* match your first-col text color */
   z-index: 2;                /* sit above the other cells */
 }
 
