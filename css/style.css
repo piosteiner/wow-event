@@ -374,7 +374,7 @@ table td {
     font-size: 0.65rem;
     padding: 0.2rem 0.4rem;
   }
-}
+
 /* Tabelle aus dem Container-Padding herausziehen */
   .table-responsive,
   #schedule-container {
@@ -385,6 +385,18 @@ table td {
     margin-right: -1rem;
     overflow-x: auto;  /* bleibt scrollbar */
   }
+
+    /* Tabs kompakter machen */
+  .tabs {
+    gap: 0.5rem;           /* weniger Abstand zwischen den Buttons */
+    margin: 1rem 0 0.5rem; /* ruhig auch hier etwas enger */
+  }
+
+  .tab-button {
+    padding: 0.25rem 0.75rem; /* kleinere Innenabstände */
+    font-size: 0.9rem;        /* bei Bedarf etwas kleinere Schrift */
+  }
+}
 
 /* DESKTOP */
 
