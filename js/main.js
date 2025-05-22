@@ -1,5 +1,3 @@
-// main.js
-
 document.addEventListener('DOMContentLoaded', () => {
   // 1) Mobile nav toggle
   const navToggle = document.querySelector('.nav-toggle');
@@ -17,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const URL_SCHEDULE =
     `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Zeitplan&tqx=out:json`;
 
-  // 3) Speicher für geladene Daten (falls du sie später brauchst)
+  // 3) Speicher für geladene Daten
   let participantsData = [];
   let scheduleData     = [];
 
@@ -76,37 +74,31 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${p.char1 || ''}</td>
         <td>${p.class1 || ''}</td>
         <td>${p.lvl1 || ''}</td>
-        <td>${
-          p.death1_clip
-            ? `<a class="death-clip" href="${p.death1_clip}" target="_blank" rel="noopener">🎬💀</a>`
-            : ''
-        }</td>
+        <td>${p.death1_clip
+          ? `<a class="death-clip" href="${p.death1_clip}" target="_blank" rel="noopener">🎬💀</a>`
+          : ''}</td>
         <td>${p.char2 || ''}</td>
         <td>${p.class2 || ''}</td>
         <td>${p.lvl2 || ''}</td>
-        <td>${
-          p.death2_clip
-            ? `<a class="death-clip" href="${p.death2_clip}" target="_blank" rel="noopener">🎬💀</a>`
-            : ''
-        }</td>
+        <td>${p.death2_clip
+          ? `<a class="death-clip" href="${p.death2_clip}" target="_blank" rel="noopener">🎬💀</a>`
+          : ''}</td>
         <td>${p.char3 || ''}</td>
         <td>${p.class3 || ''}</td>
         <td>${p.lvl3 || ''}</td>
-        <td>${
-          p.death3_clip
-            ? `<a class="death-clip" href="${p.death3_clip}" target="_blank" rel="noopener">🎬💀</a>`
-            : ''
-        }</td>
+        <td>${p.death3_clip
+          ? `<a class="death-clip" href="${p.death3_clip}" target="_blank" rel="noopener">🎬💀</a>`
+          : ''}</td>
       `;
       tbody.appendChild(tr);
 
-      // Durchstreich-Logik: wenn Totenkopf in letzter Spalte
+      // Durchstreich-Logik
       const lastCell = tr.querySelector('td:last-child');
       if (lastCell && lastCell.textContent.includes('🎬💀')) {
         tr.querySelector('td:first-child').style.textDecoration = 'line-through';
       }
 
-      // fetch live-status
+      // Live-Status abrufen
       if (username) {
         fetch(`https://decapi.me/twitch/uptime/${username}`)
           .then(r => r.text())
@@ -148,14 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.entries(byDay).forEach(([day, items]) => {
       const div = document.createElement('div');
       div.className = 'day';
-      div.innerHTML = `<h2>${day}</h2>`;
-      const ul = document.createElement('ul');
+      div.innerHTML = `<h2>${day}</h2><ul>`;
       items.forEach(it => {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${it.Uhrzeit}</strong> ${it.Streamer}`;
-        ul.appendChild(li);
+        div.innerHTML += `<li><strong>${it.Uhrzeit}</strong> ${it.Streamer}</li>`;
       });
-      div.appendChild(ul);
+      div.innerHTML += '</ul>';
       container.appendChild(div);
     });
   }
@@ -190,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadExternalHTML('youtube', 'youtube.html');
   loadExternalHTML('rules',   'rules.html');
 
-  // 10) Tab switching (einfach show/hide)
+  // 10) Tab switching (show/hide) + forced reload on Teilnehmer:innen
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.dataset.tab;
@@ -201,11 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
       const sec = document.getElementById(targetId);
       if (sec) sec.classList.add('active');
-      // **kein** erneutes rendern!
+      // Force re-render when returning to participants
+      if (targetId === 'participants') {
+        renderParticipants(participantsData);
+      }
     });
   });
 
-  // 11) Sortier-Logik
+  // 11) Sorting functions
   function sortTableByColumn(table, colIndex, type, asc = true) {
     const tbody = table.querySelector('tbody');
     const rows  = Array.from(tbody.querySelectorAll('tr'));
