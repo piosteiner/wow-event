@@ -237,12 +237,12 @@ a.death-clip:hover {
 }
 
 #participants-table thead tr th {
-  color: #feac25;
+  color: #f1b655;
 }
 
 /* Zebra-Streifen in der Teilnehmer:innen-Tabelle */
 #participants-table tbody tr:nth-child(even) {
-  background-color: #e03b0e;
+  background-color: #45260d;
 }
 
 table,
