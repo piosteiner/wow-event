@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (p.death3_clip) {
     const nameLink = tr.querySelector('td:first-child a');
     if (nameLink) {
-        nameLink.classList.add('player-out');
+        nameLink.classList.add('dead-player');
     }
     }
 

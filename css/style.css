@@ -233,6 +233,6 @@ a.death-clip:hover {
 }
 
 /* Spielernamen durchstreichen, wenn Klasse dead-player gesetzt */
-a.player-out {
+a.dead-player {
   text-decoration: line-through;
 }
