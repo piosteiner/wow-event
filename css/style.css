@@ -363,7 +363,7 @@ table td {
   /* Scroll-Wrapper auf volle Breite hinausziehen */
   .table-responsive,
   #schedule-container {
-    width: calc(100% + 2rem);
+    width: calc(100%);
     margin: 0  -1rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -382,6 +382,7 @@ table td {
   .schedule-table th,
   .schedule-table td {
     font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
   }
 }
 
