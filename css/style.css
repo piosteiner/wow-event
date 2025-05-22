@@ -181,7 +181,7 @@ footer {
   .hero h3 {
     font-size: 1.25rem; }
   footer {
-  font-size: 0.6rem;
+  font-size: 0.4rem;
 }
 }
 
@@ -427,8 +427,6 @@ table td {
     min-width: auto !important;
   }
 }
-
-/* am Ende von style.css */
 
 .rules-card {
   background: rgba(0, 0, 0, 0.6);
