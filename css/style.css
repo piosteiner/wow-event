@@ -4,19 +4,6 @@ html, body, header, footer {
   background-color: #3d1f17;
 }
 
-/* Logo oben zentrieren */
-.site-logo {
-  text-align: center;
-  margin: 1rem 0;
-}
-
-.site-logo img {
-  max-width: 200px;   /* passe an deine Designwünsche an */
-  width: 100%;
-  height: auto;
-}
-
-
 /* Reset */
 * {
   box-sizing: border-box;
