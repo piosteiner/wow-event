@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cell = document.getElementById(`live-status-${username}`);
             if (!cell) return;
             const dot = cell.querySelector('.status-dot');
-            if (text.includes('has not been live')) {
+            if (text.includes('is offline')) {
               dot.classList.replace('online', 'offline');
             } else {
               dot.classList.replace('offline', 'online');
