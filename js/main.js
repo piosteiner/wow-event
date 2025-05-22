@@ -1,5 +1,48 @@
 // js/main.js
 
+// --- LIVE-STATUS CACHE (TTL = 60s) ---
+const LIVE_TTL = 60 * 1000; // 60 000 ms = 60s
+const liveCache = {};       // { username: { status: 'online'|'offline'|'404', ts: timestamp } }
+
+function getLiveStatus(username) {
+  const now = Date.now();
+  const cache = liveCache[username];
+  if (cache && now - cache.ts < LIVE_TTL) {
+    // innerhalb der TTL: direkt zurückliefern
+    return Promise.resolve(cache.status);
+  }
+  // ansonsten neu abfragen
+  return fetch(`https://decapi.me/twitch/uptime/${username}`)
+    .then(r => r.text())
+    .then(text => {
+      let status;
+      if (text.includes('Error from Twitch API')) status = '404';
+      else if (text.includes('is offline'))          status = 'offline';
+      else                                            status = 'online';
+      liveCache[username] = { status, ts: now };
+      return status;
+    })
+    .catch(() => {
+      liveCache[username] = { status: '404', ts: now };
+      return '404';
+    });
+}
+
+function updateLiveCell(username) {
+  const cell = document.getElementById(`live-status-${username}`);
+  if (!cell) return;
+  getLiveStatus(username).then(status => {
+    cell.dataset.liveStatus = status;
+    if (status === 'online') {
+      cell.innerHTML = `<span class="status-dot online" title="Online"></span>`;
+    } else if (status === 'offline') {
+      cell.innerHTML = `<span class="status-dot offline" title="Offline"></span>`;
+    } else {
+      cell.textContent = '404';
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // 1) Mobile nav toggle
   const navToggle = document.querySelector('.nav-toggle');
@@ -32,78 +75,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5) Render Participants
-  function renderParticipants(list) {
-    const tbody = document.getElementById('participants-body');
-    if (!tbody) return;
-    tbody.innerHTML = '';
+// 5) Render Participants
+function renderParticipants(list) {
+const tbody = document.getElementById('participants-body');
+if (!tbody) return;
+tbody.innerHTML = '';
 
-    list.forEach(p => {
-      const username = p.twitch_link
-        ? p.twitch_link.replace(/^https?:\/\/(www\.)?twitch\.tv\//, '').replace(/\/$/, '').trim()
-        : null;
+list.forEach(p => {
+    const username = p.twitch_link
+    ? p.twitch_link.replace(/^https?:\/\/(www\.)?twitch\.tv\//, '').replace(/\/$/, '').trim()
+    : null;
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${p.twitch_link
-          ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">${p.streamer}</a>`
-          : p.streamer}</td>
-        <td id="live-status-${username}" data-live-status="offline">
-          <span class="status-dot offline" title="Offline"></span>
-        </td>
-        <td>${p.char1||''}</td>
-        <td>${p.class1||''}</td>
-        <td>${p.lvl1||''}</td>
-        <td>${p.death1_clip
-          ? `<a class="death-clip" href="${p.death1_clip}" target="_blank" rel="noopener">🎬💀</a>`
-          : ''}</td>
-        <td>${p.char2||''}</td>
-        <td>${p.class2||''}</td>
-        <td>${p.lvl2||''}</td>
-        <td>${p.death2_clip
-          ? `<a class="death-clip" href="${p.death2_clip}" target="_blank" rel="noopener">🎬💀</a>`
-          : ''}</td>
-        <td>${p.char3||''}</td>
-        <td>${p.class3||''}</td>
-        <td>${p.lvl3||''}</td>
-        <td>${p.death3_clip
-          ? `<a class="death-clip" href="${p.death3_clip}" target="_blank" rel="noopener">🎬💀</a>`
-          : ''}</td>
-      `;
-      tbody.appendChild(tr);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+    <td>${p.twitch_link
+        ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">${p.streamer}</a>`
+        : p.streamer}</td>
+    <td id="live-status-${username}" data-live-status="offline">
+        <span class="status-dot offline" title="Offline"></span>
+    </td>
+    <td>${p.char1||''}</td>
+    <td>${p.class1||''}</td>
+    <td>${p.lvl1||''}</td>
+    <td>${p.death1_clip
+        ? `<a class="death-clip" href="${p.death1_clip}" target="_blank" rel="noopener">🎬💀</a>`
+        : ''}</td>
+    <td>${p.char2||''}</td>
+    <td>${p.class2||''}</td>
+    <td>${p.lvl2||''}</td>
+    <td>${p.death2_clip
+        ? `<a class="death-clip" href="${p.death2_clip}" target="_blank" rel="noopener">🎬💀</a>`
+        : ''}</td>
+    <td>${p.char3||''}</td>
+    <td>${p.class3||''}</td>
+    <td>${p.lvl3||''}</td>
+    <td>${p.death3_clip
+        ? `<a class="death-clip" href="${p.death3_clip}" target="_blank" rel="noopener">🎬💀</a>`
+        : ''}</td>`;
+    tbody.appendChild(tr);
 
-      // strike-through if last cell has skull
-      const lastCell = tr.querySelector('td:last-child');
-      if (lastCell && lastCell.textContent.includes('🎬💀')) {
+    // strike-through if last cell has skull
+    const lastCell = tr.querySelector('td:last-child');
+    if (lastCell && lastCell.textContent.includes('🎬💀')) {
         tr.querySelector('td:first-child').style.textDecoration = 'line-through';
-      }
+        }
 
-      // fetch live-status
-      if (username) {
-        fetch(`https://decapi.me/twitch/uptime/${username}`)
-          .then(r => r.text())
-          .then(text => {
-            const cell = document.getElementById(`live-status-${username}`);
-            if (!cell) return;
-            if (text.includes('Error from Twitch API')) {
-              cell.textContent = '404';
-              cell.dataset.liveStatus = '404';
-            } else if (text.includes('is offline')) {
-              cell.innerHTML = `<span class="status-dot offline"></span>`;
-              cell.dataset.liveStatus = 'offline';
-            } else {
-              cell.innerHTML = `<span class="status-dot online"></span>`;
-              cell.dataset.liveStatus = 'online';
-            }
-          })
-          .catch(() => {
-            const cell = document.getElementById(`live-status-${username}`);
-            if (cell) {
-              cell.textContent = '404';
-              cell.dataset.liveStatus = '404';
-            }
-          });
-      }
+    // fetch live-status
+    if (username) {
+        updateLiveCell(username);
+        }
     });
   }
 
