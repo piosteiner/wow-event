@@ -97,11 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       tbody.appendChild(tr);
 
-    if (p.death3_clip) {
-    const nameLink = tr.querySelector('td:first-child a');
-    if (nameLink) {
-        nameLink.classList.add('dead-player');
-    }
+    const lastCell = tr.querySelector('td:last-child');
+    if (lastCell && lastCell.textContent.includes('🎬💀')) {
+      tr.querySelector('td:first-child').style.textDecoration = 'line-through';
     }
 
 
