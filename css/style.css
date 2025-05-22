@@ -233,7 +233,7 @@ a.death-clip:hover {
 
 /* Header-Row der Teilnehmer:innen-Tabelle */
 #participants-table thead tr {
-  background-color: rgb(66, 40, 24);
+  background-color: #422818;
 }
 
 #participants-table thead tr th {
