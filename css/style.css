@@ -137,7 +137,6 @@ table {
 }
 th, td {
   padding: 0.5rem;
-  border: 1px solid #ddd;
   text-align: center;
 }
 
@@ -254,4 +253,29 @@ table,
 table th,
 table td {
   border: none;
+}
+
+/* Header-Row der Schedule-Tabelle */
+.schedule-table thead tr {
+  background-color: #29130d;
+}
+
+.schedule-table thead tr th {
+  color: #94B4C1;
+}
+
+/* Erste Spalte der Schedule-Tabelle */
+.schedule-table tbody tr td:first-child {
+  background-color: #29130d;
+  color: #94B4C1;
+}
+
+.schedule-table tbody tr:nth-child(even) { background: #2a1a16; }
+.schedule-table tbody tr:nth-child(odd)  { background: #3d1f17; }
+
+#schedule-container {
+  overflow-x: auto;
+}
+.schedule-table {
+  min-width: 800px; /* je nach Spaltenzahl anpassen */
 }
