@@ -104,32 +104,26 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(text => {
             const cell = document.getElementById(`live-status-${username}`);
             if (!cell) return;
-            const dot = cell.querySelector('.status-dot');
 
+            // 1) API‐error case → show "404"
             if (text.includes('Error from Twitch API')) {
-                // error state
-                dot.classList.remove('online','offline');
-                dot.classList.add('error');
-                dot.title = 'API error';
-            } else if (text.includes('is offline')) {
-                // offline state
-                dot.classList.replace('online', 'offline');
-                dot.title = 'Offline';
-            } else {
-                // online (uptime string) state
-                dot.classList.replace('offline', 'online');
-                dot.title = 'Online';
+                cell.textContent = '404';
+                return;
             }
+
+            // 2) Offline case → red dot
+            if (text.includes('is offline')) {
+                cell.innerHTML = `<span class="status-dot offline" title="Offline"></span>`;
+                return;
+            }
+
+            // 3) Online case → green dot
+            cell.innerHTML = `<span class="status-dot online" title="Online"></span>`;
             })
             .catch(() => {
-            // network / other error
+            // network/other error → Net Error
             const cell = document.getElementById(`live-status-${username}`);
-            const dot = cell && cell.querySelector('.status-dot');
-            if (dot) {
-                dot.classList.remove('online','offline');
-                dot.classList.add('error');
-                dot.title = 'Network error';
-            }
+            if (cell) cell.textContent = 'Net Error';
             });
         }
     });
