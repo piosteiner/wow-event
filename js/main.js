@@ -12,11 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2) Google Sheet URLs
   const SHEET_ID = '1dzuO_Uzi4Z5GHi97sE6RjELOrxzRbuRXcl1tg17ODsA';
-  // CSV-Export des ersten Sheets (GID 0) für Teilnehmer:innen
-  const URL_PARTICIPANTS_CSV = 
+  const URL_PARTICIPANTS_CSV =
     `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
-  // GViz-JSON für das Blatt "Zeitplan"
-  const URL_SCHEDULE = 
+  const URL_SCHEDULE =
     `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Zeitplan&tqx=out:json`;
 
   // 3) CSV → Array von Objekten
@@ -49,78 +47,78 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 5) Render Participants
-function renderParticipants(list) {
-  const tbody = document.getElementById('participants-body');
-  if (!tbody) return;
-  tbody.innerHTML = '';
+  function renderParticipants(list) {
+    const tbody = document.getElementById('participants-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
 
-  list.forEach(p => {
-    // Username aus twitch_link extrahieren:
-    // Entfernt "http(s)://", "www." und alles bis und mit "twitch.tv/"
-    const username = p.twitch_link
-      ? p.twitch_link
-          .replace(/^https?:\/\/(www\.)?twitch\.tv\//, '')
-          .replace(/\/$/, '')
-          .trim()
-      : null;
-    tr.innerHTML = `
-      <td>${p.streamer}</td>
-      <td id="live-status-${username}">
-        <span class="status-dot offline"></span>
-      </td>
-      <td>
-        ${p.twitch_link
-          ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">Twitch</a>`
-          : ''}
-      </td>
-      <td>${p.char1 || ''}</td>
-      <td>${p.lvl1 || ''}</td>
-      <td>
-        ${p.death1_clip
-          ? `<a href="${p.death1_clip}" target="_blank" rel="noopener">Clip</a>`
-          : ''}
-      </td>
-      <td>${p.char2 || ''}</td>
-      <td>${p.lvl2 || ''}</td>
-      <td>
-        ${p.death2_clip
-          ? `<a href="${p.death2_clip}" target="_blank" rel="noopener">Clip</a>`
-          : ''}
-      </td>
-      <td>${p.char3 || ''}</td>
-      <td>${p.lvl3 || ''}</td>
-      <td>
-        ${p.death3_clip
-          ? `<a href="${p.death3_clip}" target="_blank" rel="noopener">Clip</a>`
-          : ''}
-      </td>
-    `;
-    tbody.appendChild(tr);
+    list.forEach(p => {
+      // 5a) extract Twitch username
+      const username = p.twitch_link
+        ? p.twitch_link
+            .replace(/^https?:\/\/(www\.)?twitch\.tv\//, '')
+            .replace(/\/$/, '')
+            .trim()
+        : null;
 
-    // now fetch live status and swap dot class
-    if (username) {
-      fetch(`https://decapi.me/twitch/uptime/${username}`)
-        .then(r => r.text())
-        .then(text => {
-          const cell = document.getElementById(`live-status-${username}`);
-          if (!cell) return;
-          const dot = cell.querySelector('.status-dot');
-          if (text.includes('has not been live')) {
-            dot.classList.remove('online');
-            dot.classList.add('offline');
-          } else {
-            dot.classList.remove('offline');
-            dot.classList.add('online');
-          }
-        })
-        .catch(() => {
-          // on error leave red dot
-        });
-    }
-  });
-}
+      // 5b) build the row
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${p.streamer}</td>
+        <td id="live-status-${username}">
+          <span class="status-dot offline"></span>
+        </td>
+        <td>
+          ${p.twitch_link
+            ? `<a href="${p.twitch_link}" target="_blank" rel="noopener">Twitch</a>`
+            : ''}
+        </td>
+        <td>${p.char1 || ''}</td>
+        <td>${p.lvl1 || ''}</td>
+        <td>
+          ${p.death1_clip
+            ? `<a href="${p.death1_clip}" target="_blank" rel="noopener">Clip</a>`
+            : ''}
+        </td>
+        <td>${p.char2 || ''}</td>
+        <td>${p.lvl2 || ''}</td>
+        <td>
+          ${p.death2_clip
+            ? `<a href="${p.death2_clip}" target="_blank" rel="noopener">Clip</a>`
+            : ''}
+        </td>
+        <td>${p.char3 || ''}</td>
+        <td>${p.lvl3 || ''}</td>
+        <td>
+          ${p.death3_clip
+            ? `<a href="${p.death3_clip}" target="_blank" rel="noopener">Clip</a>`
+            : ''}
+        </td>
+      `;
+      tbody.appendChild(tr);
 
-  // 6) Render Schedule
+      // 5c) fetch live-status and update dot
+      if (username) {
+        fetch(`https://decapi.me/twitch/uptime/${username}`)
+          .then(r => r.text())
+          .then(text => {
+            const cell = document.getElementById(`live-status-${username}`);
+            if (!cell) return;
+            const dot = cell.querySelector('.status-dot');
+            if (text.includes('has not been live')) {
+              dot.classList.replace('online', 'offline');
+            } else {
+              dot.classList.replace('offline', 'online');
+            }
+          })
+          .catch(() => {
+            // keep red dot on error
+          });
+      }
+    });
+  }
+
+  // 6) Render Schedule (unchanged)
   function renderSchedule(list) {
     const container = document.getElementById('schedule-container');
     if (!container) return;
@@ -145,7 +143,7 @@ function renderParticipants(list) {
     });
   }
 
-  // 7) Fetch und rendern
+  // 7) Fetch & render both sheets
   Promise.all([
     fetch(URL_PARTICIPANTS_CSV).then(r => r.text()).then(parseCSV),
     fetch(URL_SCHEDULE).then(r => r.text()).then(parseGviz)
@@ -156,11 +154,11 @@ function renderParticipants(list) {
     })
     .catch(err => console.error('Fehler beim Laden der Daten:', err));
 
-  // 8) Externe HTMLs laden (YouTube & Regeln)
+  // 8) Load external HTML for YouTube & Rules
   function loadExternalHTML(id, url) {
     fetch(url)
       .then(res => {
-        if (!res.ok) throw new Error(`Netzwerkantwort war nicht ok: ${res.statusText}`);
+        if (!res.ok) throw new Error(res.statusText);
         return res.text();
       })
       .then(html => {
@@ -170,17 +168,16 @@ function renderParticipants(list) {
       .catch(err => console.error(`Fehler beim Laden von ${url}:`, err));
   }
   loadExternalHTML('youtube', 'youtube.html');
-  loadExternalHTML('rules',   'rules.html');
+  loadExternalHTML('rules', 'rules.html');
 
-  // 9) Tab-Wechsel-Logik
+  // 9) Tab switching logic
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.dataset.tab;
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
       btn.classList.add('active');
-      const content = document.getElementById(targetId);
-      if (content) content.classList.add('active');
+      document.getElementById(targetId)?.classList.add('active');
     });
   });
 });
