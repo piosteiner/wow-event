@@ -76,21 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${p.lvl1 || ''}</td>
         <td>
           ${p.death1_clip
-            ? `<a href="${p.death1_clip}" target="_blank" rel="noopener">Clip</a>`
+            ? `<a href="${p.death1_clip}" target="_blank" rel="noopener">💀</a>`
             : ''}
         </td>
         <td>${p.char2 || ''}</td>
         <td>${p.lvl2 || ''}</td>
         <td>
           ${p.death2_clip
-            ? `<a href="${p.death2_clip}" target="_blank" rel="noopener">Clip</a>`
+            ? `<a href="${p.death2_clip}" target="_blank" rel="noopener">💀</a>`
             : ''}
         </td>
         <td>${p.char3 || ''}</td>
         <td>${p.lvl3 || ''}</td>
         <td>
           ${p.death3_clip
-            ? `<a href="${p.death3_clip}" target="_blank" rel="noopener">Clip</a>`
+            ? `<a href="${p.death3_clip}" target="_blank" rel="noopener">💀</a>`
             : ''}
         </td>
       `;
