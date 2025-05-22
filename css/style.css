@@ -335,3 +335,24 @@ table td {
 .schedule-table thead th:first-child {
   z-index: 3;
 }
+
+
+/* 1) Ermögliche horizontales Scrollen mit „natürlichem“ Touch-Support */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 2) Stelle sicher, dass die Tabelle nicht zusammengedrückt wird */
+.table-responsive table {
+  min-width: 700px; /* je nach Spaltenzahl anpassen */
+}
+
+/* 3) Kompaktere Zellen auf kleinen Bildschirmen */
+@media (max-width: 600px) {
+  #participants-table th,
+  #participants-table td {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+  }
+}
